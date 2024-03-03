@@ -4,6 +4,6 @@ public class AuthenticationControllerImpl implements AuthenticationController{
 
     @Override
     public String login() {
-        return "Auth chamado com sucesso";
+        return "Auth chamado com sucesso ";
     }
 }
