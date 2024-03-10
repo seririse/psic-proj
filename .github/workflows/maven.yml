@@ -64,5 +64,14 @@ jobs:
         #  docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }} &&
         #  docker push ${{ secrets.DOCKERHUB_USERNAME }}/psic-proj:fromGIT
         #elif [ '${{ matrix.os }}' == 'windows-latest' ]; then
-          |
-          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/psic-proj:fromGIT .
+          
+    - name: login dockerhub
+      run:
+        docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+          
+    - name: push to dockerhub
+      run:
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/psic-proj:fromGIT
+
+          
