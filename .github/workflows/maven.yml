@@ -57,11 +57,12 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        if[ "${{ matrix.os }}" == 'ubuntu-latest' ]; then 
+        if[ ${{ matrix.os }} == 'ubuntu-latest' ]; then 
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/psic-proj:fromGIT . &&
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }} &&
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/psic-proj:fromGIT
-        elif [ "${{ matrix.os }}" == 'windows-latest' ]; then
+        elif [ ${{ matrix.os }} == 'windows-latest' ]; then
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/psic-proj:fromGIT . &
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }} &
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/psic-proj:fromGIT
+        fi
