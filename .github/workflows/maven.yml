@@ -36,21 +36,23 @@ jobs:
       with:
         snapshot-dependency-file-name: '/dependency-snapshots'
 
-    #- name: Setup docker engine
-    #  run: apt-get update
-    #       apt-get install ca-certificates curl
-    #       install -m 0755 -d /etc/apt/keyrings
-    #       curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-    #       chmod a+r /etc/apt/keyrings/docker.asc
-    #       echo \
-    #       "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-    #       $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-    #       tee /etc/apt/sources.list.d/docker.list > /dev/null
-    #       apt-get update
-    #       apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    - name: Setup docker engine
+      run: | 
+           apt-get update 
+           apt-get install ca-certificates curl &&
+           install -m 0755 -d /etc/apt/keyrings &&
+           curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc &&
+           chmod a+r /etc/apt/keyrings/docker.asc &&
+           echo \ &&
+           "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \ &&
+           $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \ &&
+           tee /etc/apt/sources.list.d/docker.list > /dev/null &&
+           apt-get update &&
+           apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin &&
 
 
     - name: Build and Push Docker Image
-      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/psic-proj:fromGIT .
-           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-           docker push ${{ secrets.DOCKERHUB_USERNAME }}/psic-proj:fromGIT
+      run: | 
+           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/psic-proj:fromGIT . &&
+           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }} &&
+           docker push ${{ secrets.DOCKERHUB_USERNAME }}/psic-proj:fromGIT &&
