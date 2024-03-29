@@ -65,7 +65,10 @@ jobs:
         #  docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }} &&
         #  docker push ${{ secrets.DOCKERHUB_USERNAME }}/psic-proj:fromGIT
         #elif [ '${{ matrix.os }}' == 'windows-latest' ]; then
-        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/psic-proj:fromGIT .
+        @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command " [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin" &&
+        choco install docker-desktop -y &&
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/psic-proj:fromGIT . &&
+        dockerd --exec-opt isolation=hyperv
           
     - name: login dockerhub
       run:
