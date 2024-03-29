@@ -64,7 +64,7 @@ jobs:
             iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
     - name: Install/Start Docker
-          choco install docker-desktop -y &&
+      run: choco install docker-desktop -y &&
           dockerd --exec-opt isolation=hyperv
 
     - name: Build and Push Docker Image
