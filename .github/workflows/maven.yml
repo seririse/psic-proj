@@ -34,6 +34,14 @@ jobs:
             $InstallDir = 'C:\ProgramData\chocoportable';
             $env:ChocolateyInstall = $InstallDir;
             iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+    - name: Install Docker
+      run: choco install docker-desktop -y 
+
+    #- name: Start Docker
+    #  shell: pwsh
+    #  run: Set-ExecutionPolicy Bypass -Scope Process -Force;
+    #       dockerd --exec-opt isolation=hyperv
     
     - name: Set up JDK 17
       uses: actions/setup-java@v3
@@ -43,14 +51,6 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-
-    - name: Install Docker
-      run: choco install docker-desktop -y 
-
-    - name: Start Docker
-      shell: pwsh
-      run: Set-ExecutionPolicy Bypass -Scope Process -Force;
-            dockerd --exec-opt isolation=hyperv
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
