@@ -64,9 +64,12 @@ jobs:
       #     sudo apt-get update &&
       #     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-    - name: Install/Start Docker
+    - name: Install Docker
       run: choco install docker-desktop -y 
-          dockerd --exec-opt isolation=hyperv
+
+    - name: Start Docker
+      shell: pwsh
+      run: dockerd --exec-opt isolation=hyperv
 
     - name: Build and Push Docker Image
       run:
