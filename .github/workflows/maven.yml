@@ -28,12 +28,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Install chocolatey
-      shell: pwsh
-      run: Set-ExecutionPolicy Bypass -Scope Process -Force;
-            $InstallDir = 'C:\ProgramData\chocoportable';
-            $env:ChocolateyInstall = $InstallDir;
-            iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+    #- name: Install chocolatey
+    #  shell: pwsh
+    #  run: Set-ExecutionPolicy Bypass -Scope Process -Force;
+    #       $InstallDir = 'C:\ProgramData\chocoportable';
+    #        $env:ChocolateyInstall = $InstallDir;
+    #        iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
     - name: Install Docker
       run: choco install docker-desktop -y 
@@ -73,6 +73,7 @@ jobs:
       #     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
     - name: Build and Push Docker Image
+      shell: pwsh 
       run:
         #if [ '${{ matrix.os }}' == 'ubuntu-latest' ]; then
         #  |
@@ -80,6 +81,7 @@ jobs:
         #  docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }} &&
         #  docker push ${{ secrets.DOCKERHUB_USERNAME }}/psic-proj:fromGIT
         #elif [ '${{ matrix.os }}' == 'windows-latest' ]; then
+        $Env:ProgramFiles\Docker\Docker\DockerCli.exe -SwitchDaemon .;
         docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/psic-proj:fromGIT . 
           
     - name: login dockerhub
