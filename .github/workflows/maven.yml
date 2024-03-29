@@ -32,7 +32,7 @@ jobs:
       run: Set-ExecutionPolicy Bypass -Scope Process -Force
             $InstallDir = 'C:\ProgramData\chocoportable'
             $env:ChocolateyInstall = $InstallDir
-            iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')))
+            iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
     
     - name: Set up JDK 17
       uses: actions/setup-java@v3
